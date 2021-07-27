@@ -252,7 +252,9 @@ namespace ams::controller {
             };
 
             SwitchController(const bluetooth::Address *address)
-                : m_address(*address) { };
+                : m_address(*address)
+                , previous_l_state(0)
+                , l_button_toggling(0) { };
 
             const bluetooth::Address& Address(void) const { return m_address; }
 
@@ -263,14 +265,19 @@ namespace ams::controller {
             virtual Result HandleIncomingReport(const bluetooth::HidReport *report);
             virtual Result HandleOutgoingReport(const bluetooth::HidReport *report);
 
+
+
         protected:
             virtual void ApplyButtonCombos(SwitchButtonData *buttons);
-            virtual void SwapLState(SwitchButtonData *buttons);
+            virtual void CheckLbutton(SwitchButtonData *buttons);
 
             bluetooth::Address m_address;
+            uint8_t previous_l_state;
+            uint8_t l_button_toggling;
 
             static bluetooth::HidReport s_input_report;
             static bluetooth::HidReport s_output_report;
+
     };
 
 }
