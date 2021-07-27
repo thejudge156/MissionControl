@@ -58,6 +58,7 @@ namespace ams::controller {
         auto switch_report = reinterpret_cast<SwitchReportData *>(s_input_report.data);
         if (switch_report->id == 0x30) {
             this->ApplyButtonCombos(&switch_report->input0x30.buttons);
+            this->SwapLState(&switch_report->input0x30.buttons);
         }
 
         return bluetooth::hid::report::WriteHidReportBuffer(&m_address, &s_input_report);
@@ -81,6 +82,10 @@ namespace ams::controller {
             buttons->minus = 0;
             buttons->dpad_up = 0;
         }
+    }
+
+    void SwitchController::SwapLState(SwitchButtonData *buttons) {
+        buttons->L = !buttons->L;
     }
 
 }
