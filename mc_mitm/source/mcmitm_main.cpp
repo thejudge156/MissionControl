@@ -18,6 +18,8 @@
 #include "mcmitm_initialization.hpp"
 #include "mcmitm_config.hpp"
 
+#include "logging.hpp"
+
 namespace ams {
 
     namespace mitm {
@@ -77,6 +79,8 @@ namespace ams {
     }
 
     void Main() {
+        ams::log::Initialize();
+
         // Initialise module configuration
         mitm::InitializeConfig();
 

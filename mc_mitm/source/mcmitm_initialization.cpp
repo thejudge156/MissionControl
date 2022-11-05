@@ -21,6 +21,7 @@
 #include "bluetooth_mitm/btdrv_mitm_service.hpp"
 #include "bluetooth_mitm/bluetoothmitm_module.hpp"
 #include "btm_mitm/btmmitm_module.hpp"
+#include "usb_mitm/usbmitm_module.hpp"
 #include "mc/mc_module.hpp"
 #include "bluetooth_mitm/bluetooth/bluetooth_events.hpp"
 #include "bluetooth_mitm/bluetooth/bluetooth_core.hpp"
@@ -110,6 +111,7 @@ namespace ams::mitm {
     }
 
     void LaunchModules() {
+        R_ABORT_UNLESS(ams::mitm::usb::Launch());
         R_ABORT_UNLESS(ams::mitm::bluetooth::Launch());
         R_ABORT_UNLESS(ams::mitm::btm::Launch());
         R_ABORT_UNLESS(ams::mitm::mc::Launch());
@@ -119,6 +121,7 @@ namespace ams::mitm {
         ams::mitm::mc::WaitFinished();
         ams::mitm::btm::WaitFinished();
         ams::mitm::bluetooth::WaitFinished();
+        ams::mitm::usb::WaitFinished();
     }
 
 }
